@@ -20,22 +20,29 @@ class CPWidgetView(WidgetView):
     async def get_player_data(self):
         data = await super().get_player_data()
 
+        # Calculated the maximum number of rows that can be displayed
         max_n = math.floor((self.size_y - 5.5) / 3.3)
 
+        # Maps a logon to the data that should be displayed
         cps = {}
 
         for player in self.app.instance.player_manager.online:
             list_times = []
             n = 0
             for pcp in self.app.player_cps:
+                # Make sure to only display a certain number of entries
                 if n >= max_n:
                     break
                 list_time = {}
+                # Set time color to green for your own CP time
                 list_time['color'] = "$0f3" if player.login == pcp.player.login else "$bbb"
+
+                # Display 'fin' when the player crossed the finish line else display the CP number
                 if pcp.cp == -1 or (pcp.cp == 0 and pcp.time != 0):
                     list_time['cp'] = 'fin'
                 else:
                     list_time['cp'] = str(pcp.cp)
+
                 list_time['cptime'] = times.format_time(pcp.time)
                 list_time['nickname'] = pcp.player.nickname
                 list_times.append(list_time)
