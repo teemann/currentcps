@@ -1,0 +1,6 @@
+{
+    "python.linting.pylintEnabled": false,
+    "python.autoComplete.extraPaths": [
+        "D:/Programmieren/Python/pyplanet/src"
+    ]
+}
