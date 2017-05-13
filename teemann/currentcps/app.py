@@ -21,23 +21,7 @@ class CurrentCPs(AppConfig):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        p1 = Player()
-        p1.login = "pleingaz"
-        p1.nickname = "$fffpleingaz"
-
-        p2 = Player()
-        p2.login = "sakeyram"
-        p2.nickname = "$0f0Choco$ffflleight"
-
-        u1 = PlayerCP(p1)
-        u1.cp = 3
-        u1.time = 28000
-
-        u2 = PlayerCP(p2)
-        u2.cp = 2
-        u2.time = 5000
-
-        self.current_cps = {}#{"pleingaz":u1, "sakeyram": u2}
+        self.current_cps = {}
         self.widget = None
         self.player_cps = []
         logging.info("Loaded app CurrentCPs")
@@ -94,7 +78,6 @@ class CurrentCPs(AppConfig):
             pcp = self.current_cps[key]
             return (1 if pcp.cp == -1 else 2, -pcp.cp, pcp.time)
 
-        #await self.instance.gbx.execute('ChatSendServerMessage', '--- CPs ---')
         self.player_cps.clear()
         for login in sorted(self.current_cps, key = lambda x: keyfunc(x)):
             pcp = self.current_cps[login]
@@ -102,12 +85,9 @@ class CurrentCPs(AppConfig):
             cpstr = str(cp)
             if cp == -1:
                 cpstr = "fin"
-            logging.info(str(login) + ": " + cpstr)
+            #logging.info(str(login) + ": " + cpstr)
             self.player_cps.append(pcp)
-            #message = '{}: cp {} ({})'.format(pcp.player.nickname, cpstr, pcp.time)
-            #await self.instance.gbx.execute('ChatSendServerMessage', message)
 
-        #await self.instance.gbx.execute('ChatSendServerMessage', '------------')
         await self.widget.display()
 
 class PlayerCP:
@@ -116,6 +96,7 @@ class PlayerCP:
         self.cp = 0
         self.time = 0
 
+#TODO: Remove the following code
     def cptime(self):
         return times.format_time(self.time)
 
