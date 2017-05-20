@@ -86,7 +86,7 @@ class CurrentCPs(AppConfig):
         # Used for sorting the PlayerCP objects by the 1. CP and 2. the time (Finished players are always on top; TODO: might limit these)
         def keyfunc(key):
             pcp = self.current_cps[key]
-            return (1 if pcp.cp == -1 else 2, -pcp.cp, pcp.time)
+            return (1 if pcp.cp == -1 else 2, -(pcp.cp), pcp.time)
 
         self.player_cps.clear()
 
