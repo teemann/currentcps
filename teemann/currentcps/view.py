@@ -3,6 +3,7 @@ import math
 from pyplanet.views.generics.widget import WidgetView
 from pyplanet.utils import times
 
+
 class CPWidgetView(WidgetView):
     template_name = 'currentcps/cpwidget.xml'
     widget_x = -162
@@ -15,7 +16,6 @@ class CPWidgetView(WidgetView):
         self.app = app
         self.manager = app.context.ui
         self.id = 'pyplanet__widgets_currentcps'
-
 
     async def get_player_data(self):
         data = await super().get_player_data()
@@ -31,7 +31,7 @@ class CPWidgetView(WidgetView):
             n = 0
             for pcp in self.app.player_cps:
                 # Make sure to only display a certain number of entries
-                if n >= max_n:
+                if float(n) >= max_n:
                     break
                 list_time = {}
                 # Set time color to green for your own CP time
@@ -48,7 +48,7 @@ class CPWidgetView(WidgetView):
                 list_times.append(list_time)
                 n = n + 1
             cps[player.login] = {'cps': list_times}
-        
+
         data.update(cps)
 
         return data
