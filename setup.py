@@ -26,8 +26,8 @@ setup(
 	extras_require={},
 	include_package_data=True,
 
-	author='Enter your name here',
-	author_email='Enter your email here',
+	author='Mario Kogler',
+	author_email='teemann100@gmail.com',
 	url='https://github.com/teemann/currentcps',
 
 	classifiers=[  # Please update this. Possibilities: https://pypi.python.org/pypi?%3Aaction=list_classifiers
