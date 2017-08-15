@@ -29,9 +29,9 @@ class CPWidgetView(TimesWidgetView):
 
         # Maps a logon to the data that should be displayed
         cps = {}
-        last_fin = 0
 
         for idx, player in enumerate(self.app.instance.player_manager.online):
+            last_fin = 0
             list_times = []
             n = 1
             for pcp in self.app.player_cps:
