@@ -13,7 +13,7 @@ EXCLUDE_FROM_PACKAGES = [
     'env*',
 ]
 
-PKG = 'pyplanet_current'
+PKG = 'pyplanet_currentcps'
 ######
 setup(
     name=PKG,
