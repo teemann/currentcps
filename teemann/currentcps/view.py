@@ -2,6 +2,7 @@ import math
 
 from pyplanet.views.generics.widget import TimesWidgetView
 from pyplanet.utils import times
+import logging
 
 
 class CPWidgetView(TimesWidgetView):
@@ -51,6 +52,7 @@ class CPWidgetView(TimesWidgetView):
 
                 list_time['cptime'] = times.format_time(pcp.time)
                 list_time['nickname'] = pcp.player.nickname
+                list_time['login'] = pcp.player.login
 
                 # Only show top 5 fins but always show the current player
                 if (pcp.cp == -1 or (pcp.cp == 0 and pcp.time != 0)) and last_fin > 5:
@@ -66,3 +68,9 @@ class CPWidgetView(TimesWidgetView):
         data.update(cps)
 
         return data
+
+    async def handle_catch_all(self, player, action, values, **kwargs):
+        logging.debug("CatchAll: " + player.login + ": " + action)
+        if str(action).startswith('spec_'):
+            target = action[5:]
+            await self.app.spec_player(player=player, target_login=target)

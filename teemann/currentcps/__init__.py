@@ -52,6 +52,7 @@ class CurrentCPs(AppConfig):
         self.instance.signal_manager.listen(mp_signals.player.player_connect, self.player_connect)
         self.instance.signal_manager.listen(mp_signals.player.player_disconnect, self.player_disconnect)
         self.instance.signal_manager.listen(mp_signals.map.map_start__end, self.map_end)
+        self.instance.signal_manager.listen(mp_signals.player.player_enter_spectator_slot, self.player_enter_spec)
 
         self.widget = CPWidgetView(self)
         # await self.widget.display()
@@ -98,6 +99,12 @@ class CurrentCPs(AppConfig):
         self.current_cps.pop(player.login, None)
         await self.update_view()
 
+    # When a player enters spectator mode
+    async def player_enter_spec(self, player, *args, **kwargs):
+        # Remove the current CP from the widget when a player starts to spectate
+        self.current_cps.pop(player.login, None)
+        await self.update_view()
+
     # When the map ends
     async def map_end(self, *args, **kwargs):
         self.current_cps.clear()  # Clear the current CPs when the map ends
@@ -122,6 +129,13 @@ class CurrentCPs(AppConfig):
             self.player_cps.append(pcp)
 
         await self.widget.display()  # Update the widget for all players
+
+    async def spec_player(self, player, target_login):
+        logging.debug(player.login + ' will now spec ' + target_login)
+        logging.debug(await self.instance.gbx.multicall(
+            self.instance.gbx('ForceSpectator', player.login, 3),
+            self.instance.gbx('ForceSpectatorTarget', player.login, target_login, -1)
+        ))
 
 
 class PlayerCP:
