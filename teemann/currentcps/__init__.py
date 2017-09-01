@@ -75,7 +75,7 @@ class CurrentCPs(AppConfig):
         await self.update_view()
 
     # When a player passes the finish line
-    async def player_finish(self, player, race_time, race_cps, is_end_race, *args, **kwargs):
+    async def player_finish(self, player, race_time, race_cps, is_end_race, raw, *args, **kwargs):
         # Create new PlayerCP object if there is no PlayerCP object for that player yet
         if player.login not in self.current_cps:
             self.current_cps[player.login] = PlayerCP(player)
@@ -84,7 +84,8 @@ class CurrentCPs(AppConfig):
         if is_end_race:
             self.current_cps[player.login].cp = -1
         else:
-            self.current_cps[player.login].cp = race_cps  # Otherwise just update the current cp
+            self.current_cps[player.login].cp = int(raw['checkpointinrace']) + 1  # Otherwise just update the current cp
+            # logging.debug(raw)
         self.current_cps[player.login].time = race_time
         await self.update_view()
 
