@@ -46,13 +46,13 @@ class CurrentCPs(AppConfig):
 
     async def on_start(self):
         # Listen to some signals
-        self.instance.signal_manager.listen(tm_signals.waypoint, self.player_cp)
-        self.instance.signal_manager.listen(tm_signals.start_line, self.player_start)
-        self.instance.signal_manager.listen(tm_signals.finish, self.player_finish)
-        self.instance.signal_manager.listen(mp_signals.player.player_connect, self.player_connect)
-        self.instance.signal_manager.listen(mp_signals.player.player_disconnect, self.player_disconnect)
-        self.instance.signal_manager.listen(mp_signals.map.map_start__end, self.map_end)
-        self.instance.signal_manager.listen(mp_signals.player.player_enter_spectator_slot, self.player_enter_spec)
+        self.context.signals.listen(tm_signals.waypoint, self.player_cp)
+        self.context.signals.listen(tm_signals.start_line, self.player_start)
+        self.context.signals.listen(tm_signals.finish, self.player_finish)
+        self.context.signals.listen(mp_signals.player.player_connect, self.player_connect)
+        self.context.signals.listen(mp_signals.player.player_disconnect, self.player_disconnect)
+        self.context.signals.listen(mp_signals.map.map_start__end, self.map_end)
+        self.context.signals.listen(mp_signals.player.player_enter_spectator_slot, self.player_enter_spec)
 
         # Make sure we move the rounds_scores and other gui elements.
         self.instance.ui_manager.properties.set_attribute('round_scores', 'pos', '-126.5 87. 150.')
