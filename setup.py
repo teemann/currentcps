@@ -17,7 +17,7 @@ PKG = 'pyplanet_currentcps'
 ######
 setup(
     name=PKG,
-    version='1.0.3',
+    version='1.0.4',
     description='Current CP widget, useful for RPG servers, App for PyPlanet Server Controller',
     long_description=long_description(),
     keywords='maniaplanet, pyplanet, rpg, checkpoint',
