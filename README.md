@@ -32,5 +32,23 @@ pip install -U pyplanet_currentcps
 The same command can also be used to update the plugin and any dependencies.  
 If you have already installed a version from github, you'll have to remove or
 rename it.
+To activate the app, open your settings/apps.py and add 'teemann.currentcps'. The file should look somewhat like this:
+```
+APPS = {
+	'default': [
+		'pyplanet.apps.contrib.admin',
+		'pyplanet.apps.contrib.jukebox',
+		'pyplanet.apps.contrib.karma',
+		'pyplanet.apps.contrib.local_records',
+		'pyplanet.apps.contrib.dedimania',
+		'pyplanet.apps.contrib.players',
+		'pyplanet.apps.contrib.info',
+		'pyplanet.apps.contrib.mx',
+		'pyplanet.apps.contrib.sector_times',
+		'teemann.currentcps',
+	]
+}
+```
+If pyplanet is still running, restart it.
 
 [pyplanet]: https://github.com/PyPlanet/PyPlanet
