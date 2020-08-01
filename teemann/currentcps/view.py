@@ -8,19 +8,26 @@ import logging
 class CPWidgetView(TimesWidgetView):
     widget_x = -160
     widget_y = 70.5
+    z_index = 30
     size_x = 38
     size_y = 55.5
     title = 'Current CPs'
 
     template_name = 'currentcps/cpwidget.xml'
 
-    def __init__(self, app):
+    def __init__(self, app, height=55.5):
         super().__init__(self)
         self.app = app
         self.manager = app.context.ui
         self.id = 'pyplanet__widgets_currentcps'
 
-        self.record_amount = 15
+        self.size_y = height
+
+    def set_num_cps(self, num_cps=None):
+        if not num_cps:
+            self.title = 'Current CPs'
+        else:
+            self.title = 'Current CPs $aaa/ {}'.format(num_cps)
 
     async def get_player_data(self):
         data = await super().get_player_data()
@@ -68,6 +75,10 @@ class CPWidgetView(TimesWidgetView):
         data.update(cps)
 
         return data
+
+    async def get_context_data(self):
+        self.widget_y = 12.5 if self.app.dedimania_enabled else 70.5
+        return await super().get_context_data()
 
     async def handle_catch_all(self, player, action, values, **kwargs):
         logging.debug("CatchAll: " + player.login + ": " + action)
