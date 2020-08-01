@@ -25,6 +25,7 @@ setup(
     packages=find_packages(exclude=EXCLUDE_FROM_PACKAGES),
     extras_require={},
     include_package_data=True,
+    long_description_content_type='text/markdown',
 
     author='teemann',
     author_email='teemann100@gmail.com',
